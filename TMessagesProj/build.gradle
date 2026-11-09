@@ -143,6 +143,18 @@ android {
         minSdkVersion 23
         targetSdkVersion 36
 
+        // MoonGram credentials are injected at build time; never commit API secrets.
+        def moonGramApiId = (project.findProperty('MOONGRAM_API_ID') ?: System.getenv('MOONGRAM_API_ID') ?: '0').toString()
+        def moonGramApiHash = (project.findProperty('MOONGRAM_API_HASH') ?: System.getenv('MOONGRAM_API_HASH') ?: '').toString()
+        if (!(moonGramApiId ==~ /[1-9][0-9]*/)) {
+            throw new GradleException('MOONGRAM_API_ID must be set to your own numeric Telegram API ID.')
+        }
+        if (!(moonGramApiHash ==~ /[0-9a-fA-F]{32}/)) {
+            throw new GradleException('MOONGRAM_API_HASH must be set to your own 32-character Telegram API hash.')
+        }
+        buildConfigField 'int', 'MOONGRAM_API_ID', moonGramApiId
+        buildConfigField 'String', 'MOONGRAM_API_HASH', '"' + moonGramApiHash + '"'
+
         vectorDrawables.generatedDensities = ['mdpi', 'hdpi', 'xhdpi', 'xxhdpi']
 
         multiDexEnabled true
