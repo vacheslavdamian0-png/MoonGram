@@ -8,6 +8,8 @@ Starter Telegram Mini App with profile, badges and a protected admin panel.
 - Owners can issue one-time staff invitation tokens bound to a target Telegram ID. Tokens expire after 10 minutes; only SHA-256 hashes are stored; redemption is single-use.
 - Staff can manage badges and MoonGram IDs, but cannot issue new staff tokens or promote themselves to owner.
 - Assign team and supporter badges; change unique MoonGram IDs.
+- Select one of six built-in 16:9 profile banners; the selected preset is saved to the Mini App SQLite profile and returned by the profile API.
+- The two configured owner IDs display the fixed “Владелец MoonGram” label; staff cannot create an Owner badge.
 - Badge descriptions: team = “Этот пользователь член команды MoonGram”; supporter = “Этот пользователь поддержал разработку MoonGram”.
 - SQLite persistence.
 
