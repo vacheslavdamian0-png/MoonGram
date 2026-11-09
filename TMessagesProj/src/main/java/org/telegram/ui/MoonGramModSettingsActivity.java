@@ -13,6 +13,7 @@ import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.ApplicationLoader;
 import org.telegram.messenger.R;
 import org.telegram.ui.ActionBar.AlertDialog;
+import org.telegram.ui.ActionBar.ActionBar;
 import org.telegram.ui.ActionBar.BaseFragment;
 import org.telegram.ui.ActionBar.Theme;
 import org.telegram.ui.Components.LayoutHelper;
@@ -79,7 +80,6 @@ public class MoonGramModSettingsActivity extends BaseFragment {
                 tile.addView(label, new FrameLayout.LayoutParams(-1, -1));
                 tile.setOnClickListener(v -> {
                     preferences.edit().putInt(KEY_BANNER, index).apply();
-                    BulletinFactory.of(this).createSimpleBulletin(R.raw.contact_check, "Баннер выбран").show();
                     finishFragment();
                     presentFragment(new MoonGramModSettingsActivity());
                 });
