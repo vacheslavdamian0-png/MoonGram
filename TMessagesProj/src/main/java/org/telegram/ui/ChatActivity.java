@@ -1690,6 +1690,7 @@ public class ChatActivity extends BaseFragment implements
     private final static int change_colors = 27;
     private final static int tag_message = 28;
     private final static int boost_group = 29;
+    private final static int local_nft = 890;
 
     private final static int bot_help = 30;
     private final static int bot_settings = 31;
@@ -3924,6 +3925,8 @@ public class ChatActivity extends BaseFragment implements
                     } else {
                         getNotificationCenter().postNotificationName(NotificationCenter.openBoostForUsersDialog, dialog_id);
                     }
+                } else if (id == local_nft) {
+                    presentFragment(new MoonGramLocalNftActivity());
                 } else if (id == report) {
                     ReportBottomSheet.openChat(ChatActivity.this);
                 } else if (id == star) {
@@ -4284,6 +4287,7 @@ public class ChatActivity extends BaseFragment implements
             });
             otherIcon.addView(headerItem.getIconView());
             headerItem.setContentDescription(LocaleController.getString(R.string.AccDescrMoreOptions));
+            headerItem.lazilyAddSubItem(local_nft, R.drawable.msg_gift_premium, "Local NFT");
 
             if (currentUser != null && currentUser.self && chatMode != MODE_SAVED) {
                 savedChatsItem = headerItem.lazilyAddSubItem(view_as_topics, R.drawable.msg_topics, LocaleController.getString(R.string.SavedViewAsChats));
