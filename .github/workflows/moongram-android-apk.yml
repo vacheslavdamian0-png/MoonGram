@@ -48,7 +48,24 @@ jobs:
           yes | sdkmanager --licenses >/dev/null
           sdkmanager "platforms;android-36" "build-tools;36.0.0" "ndk;27.2.12479018" "cmake;3.22.1"
 
+      - name: Validate private Telegram API credentials
+        env:
+          MOONGRAM_API_ID: ${{ secrets.MOONGRAM_API_ID }}
+          MOONGRAM_API_HASH: ${{ secrets.MOONGRAM_API_HASH }}
+        run: |
+          if [ -z "$MOONGRAM_API_ID" ] || [ -z "$MOONGRAM_API_HASH" ]; then
+            echo "::error::Add MOONGRAM_API_ID and MOONGRAM_API_HASH in GitHub Settings > Secrets and variables > Actions."
+            exit 1
+          fi
+          if ! [[ "$MOONGRAM_API_ID" =~ ^[1-9][0-9]*$ ]] || ! [[ "$MOONGRAM_API_HASH" =~ ^[0-9a-fA-F]{32}$ ]]; then
+            echo "::error::Telegram API ID/hash format is invalid."
+            exit 1
+          fi
+
       - name: Build MoonGram debug APK
+        env:
+          MOONGRAM_API_ID: ${{ secrets.MOONGRAM_API_ID }}
+          MOONGRAM_API_HASH: ${{ secrets.MOONGRAM_API_HASH }}
         run: |
           chmod +x ./gradlew
           ./gradlew :TMessagesProj_App:assembleAfatDebug --no-daemon --stacktrace
