@@ -90,12 +90,12 @@ public class MoonGramModSettingsActivity extends BaseFragment {
             bannerGrid.addView(line, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
         }
         content.addView(bannerGrid, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
-        content.addView(note(context, "Пока выбор сохраняется на этом устройстве. Чтобы баннер отображался другим пользователям, понадобится синхронизация с сервером."), LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 0, 8, 0, 18));
+        content.addView(note(context, "В этом Android-клиенте выбор пока сохраняется на устройстве. Синхронизация и показ баннера в нативных профилях Telegram ещё не подключены."), LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 0, 8, 0, 18));
 
         TextView animationTitle = heading(context, "Анимации");
         content.addView(animationTitle, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 0, 0, 0, 8));
         boolean enabled = preferences.getBoolean(KEY_ANIMATIONS, true);
-        TextView animationToggle = option(context, "Плавные анимации", enabled ? "Включены" : "Выключены");
+        TextView animationToggle = option(context, "Плавные анимации (экспериментально)", enabled ? "Включены" : "Выключены");
         animationToggle.setOnClickListener(v -> {
             boolean next = !preferences.getBoolean(KEY_ANIMATIONS, true);
             preferences.edit().putBoolean(KEY_ANIMATIONS, next).apply();
@@ -108,14 +108,14 @@ public class MoonGramModSettingsActivity extends BaseFragment {
         TextView ghost = option(context, "Ghost 👻", "Требует подключения");
         ghost.setOnClickListener(v -> new AlertDialog.Builder(getParentActivity())
             .setTitle("Ghost 👻")
-            .setMessage("Функция будет управлять поддерживаемыми настройками приватности Telegram и сохранять их исходные значения для восстановления. Сейчас она ещё не активирована, чтобы случайно не менять приватность аккаунта.")
+            .setMessage("Ghost пока не активирован. Перед включением нужно подключить безопасное сохранение исходных правил приватности Telegram и их точное восстановление.")
             .setPositiveButton("Понятно", null)
             .show());
         content.addView(ghost, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, AndroidUtilities.dp(54)));
 
         TextView roles = heading(context, "Роли и оформление");
         content.addView(roles, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 0, 18, 0, 8));
-        content.addView(note(context, "Значки Owner, Team и Supporter, а также отображение баннера в публичной шапке профиля будут подключены следующим этапом после проверки серверной модели ролей и профиля."), LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
+        content.addView(note(context, "Owner, Team и Supporter в Mini App используют отдельную серверную модель. Отображение этих значков и баннера в нативных профилях Telegram ещё не подключено."), LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
 
         ScrollViewContainer scroll = new ScrollViewContainer(context);
         scroll.addView(content);
