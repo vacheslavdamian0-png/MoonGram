@@ -29,6 +29,6 @@ The build intentionally stops if either secret is missing or malformed. The app 
 - This is a debug/test APK, not a signed release build for RuStore.
 - The current application ID and Firebase configuration are still inherited from the upstream Telegram build. Before public distribution, create a unique MoonGram application ID and your own Firebase Android app/configuration.
 - A separate release signing key must be created and kept private. Never commit a keystore or passwords.
-- The local preset banner selection is not yet synchronized between accounts or rendered in other users' profiles.
-- Ghost privacy automation and public role-badge rendering in the native profile are not yet complete.
+- The native Android MOD screen still stores its banner selection locally; it is not yet connected to the Mini App server or rendered in other users' native Telegram profiles. The separate Mini App now saves its six built-in 16:9 banner presets in SQLite and returns them through its profile API.
+- Ghost privacy automation and public role-badge rendering in the native Android profile are not yet complete. The Mini App owner label and staff/supporter badges are separate from native Telegram profile roles.
 - Do not publish the app until the Telegram API credentials, package ID, Firebase configuration, signing key, licensing notices, and privacy behavior have been reviewed.
