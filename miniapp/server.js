@@ -6,9 +6,9 @@ const PORT=Number(process.env.PORT||3000),BOT_TOKEN=process.env.BOT_TOKEN||'';
 const ADMIN_IDS=new Set((process.env.ADMIN_IDS||'').split(',').map(x=>x.trim()).filter(x=>/^\d+$/.test(x)));
 const file=path.resolve(process.env.DATABASE_FILE||'./data/moongram.sqlite'); fs.mkdirSync(path.dirname(file),{recursive:true});
 const db=new Database(file); db.pragma('journal_mode = WAL');
-db.exec("CREATE TABLE IF NOT EXISTS profiles(user_id TEXT PRIMARY KEY,moon_id TEXT UNIQUE,display_name TEXT NOT NULL DEFAULT '',username TEXT NOT NULL DEFAULT '',created_at INTEGER NOT NULL);
+db.exec("CREATE TABLE IF NOT EXISTS profiles(user_id TEXT PRIMARY KEY,moon_id TEXT UNIQUE,display_name TEXT NOT NULL DEFAULT '',username TEXT NOT NULL DEFAULT '',created_at INTEGER NOT NULL); CREATE TABLE IF NOT EXISTS badges(id INTEGER PRIMARY KEY AUTOINCREMENT,user_id TEXT NOT NULL,code TEXT NOT NULL,kind TEXT NOT NULL CHECK(kind IN ('team','supporter')),title TEXT NOT NULL,created_at INTEGER NOT NULL,UNIQUE(user_id,code)); CREATE TABLE IF NOT EXISTS panel_tokens(token_hash TEXT PRIMARY KEY,target_user_id TEXT NOT NULL,expires_at INTEGER NOT NULL,used_at INTEGER); CREATE TABLE IF NOT EXISTS panel_admins(user_id TEXT PRIMARY KEY,granted_at INTEGER NOT NULL)");
 const profileColumns=db.prepare('PRAGMA table_info(profiles)').all();
-if(!profileColumns.some(column=>column.name==='banner')) db.exec('ALTER TABLE profiles ADD COLUMN banner INTEGER NOT NULL DEFAULT 0'); CREATE TABLE IF NOT EXISTS badges(id INTEGER PRIMARY KEY AUTOINCREMENT,user_id TEXT NOT NULL,code TEXT NOT NULL,kind TEXT NOT NULL CHECK(kind IN ('team','supporter')),title TEXT NOT NULL,created_at INTEGER NOT NULL,UNIQUE(user_id,code)); CREATE TABLE IF NOT EXISTS panel_tokens(token_hash TEXT PRIMARY KEY,target_user_id TEXT NOT NULL,expires_at INTEGER NOT NULL,used_at INTEGER); CREATE TABLE IF NOT EXISTS panel_admins(user_id TEXT PRIMARY KEY,granted_at INTEGER NOT NULL)");
+if(!profileColumns.some(column=>column.name==='banner')) db.exec('ALTER TABLE profiles ADD COLUMN banner INTEGER NOT NULL DEFAULT 0');
 function verify(raw){
  if(!BOT_TOKEN||!raw||raw.length>8192)return null;
  const p=new URLSearchParams(raw),hash=p.get('hash'),authDate=Number(p.get('auth_date')),u=p.get('user');
