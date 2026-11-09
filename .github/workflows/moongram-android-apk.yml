@@ -26,7 +26,7 @@ concurrency:
 jobs:
   build-debug-apk:
     runs-on: ubuntu-latest
-    timeout-minutes: 120
+    timeout-minutes: 60
     steps:
       - name: Checkout source and submodules
         uses: actions/checkout@v4
@@ -98,7 +98,7 @@ jobs:
           MOONGRAM_API_HASH: ${{ secrets.MOONGRAM_API_HASH }}
         run: |
           chmod +x ./gradlew
-          ./gradlew :TMessagesProj_App:assembleAfatDebug --no-daemon --stacktrace
+          ./gradlew :TMessagesProj_App:assembleAfatDebug --no-daemon --no-parallel --max-workers=2 --console=plain --stacktrace
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
