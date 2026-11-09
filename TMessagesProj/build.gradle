@@ -173,7 +173,7 @@ android {
             jniDebuggable true
             shrinkResources false
             multiDexEnabled true
-            ndk.debugSymbolLevel = 'FULL'
+            ndk.debugSymbolLevel = 'NONE'
             buildConfigField "String", "BUILD_VERSION_STRING", "\"" + APP_VERSION_NAME + "\""
             buildConfigField "String", "BETA_URL", "\"" + getProps("BETA_PRIVATE_URL") + "\""
             buildConfigField "boolean", "DEBUG_VERSION", "true"
