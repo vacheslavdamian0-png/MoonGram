@@ -149,7 +149,7 @@ public class MoonGramModSettingsActivity extends BaseFragment {
     private TextView note(Context context, String text) {
         TextView view = new TextView(context);
         view.setText(text);
-        view.setTextColor(Theme.getColor(Theme.key_windowBackgroundWhiteGrayText));
+        view.setTextColor(Theme.getColor(Theme.key_windowBackgroundWhiteGrayText2));
         view.setTextSize(13);
         view.setPadding(AndroidUtilities.dp(4), AndroidUtilities.dp(4), AndroidUtilities.dp(4), AndroidUtilities.dp(4));
         return view;
