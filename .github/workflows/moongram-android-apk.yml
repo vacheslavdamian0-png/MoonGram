@@ -34,6 +34,26 @@ jobs:
           submodules: recursive
           fetch-depth: 0
 
+      - name: Check Android build prerequisites
+        run: |
+          test -f TMessagesProj/google-services.json || { echo "::error::TMessagesProj/google-services.json is missing."; exit 1; }
+          test -f TMessagesProj_App/google-services.json || { echo "::error::TMessagesProj_App/google-services.json is missing."; exit 1; }
+          test -f TMessagesProj/config/release.keystore || { echo "::error::Android signing keystore is missing."; exit 1; }
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          config = json.loads(Path("TMessagesProj_App/google-services.json").read_text())
+          packages = {
+              client.get("client_info", {}).get("android_client_info", {}).get("package_name")
+              for client in config.get("client", [])
+          }
+          expected = "org.telegram.messenger.beta"
+          if expected not in packages:
+              raise SystemExit(f"Firebase config has no client for debug package {expected}")
+          print("Firebase debug package configuration: OK")
+          print("Android signing keystore: present")
+          PY
+
       - name: Set up Java 17
         uses: actions/setup-java@v4
         with:
