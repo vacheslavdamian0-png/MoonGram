@@ -97,3 +97,4 @@ jobs:
           path: TMessagesProj_App/build/outputs/apk/afat/debug/app.apk
           if-no-files-found: error
           retention-days: 14
+# Re-trigger Android APK build after repository secrets were configured.
