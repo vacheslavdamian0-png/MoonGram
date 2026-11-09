@@ -6,13 +6,13 @@ It builds a debug APK in GitHub's cloud runner; Android Studio or a PC is not re
 ## One-time setup
 
 1. Open the repository on GitHub.
-2. Go to **Settings → Secrets and variables → Actions**.
+2. Open [Repository Actions secrets](https://github.com/vacheslavdamian0-png/MoonGram/settings/secrets/actions) or go to **Settings → Secrets and variables → Actions**.
 3. Add two **Repository secrets**:
    - `MOONGRAM_API_ID`: your own numeric Telegram API ID.
    - `MOONGRAM_API_HASH`: your own 32-character Telegram API hash.
-4. Do not paste these values into source files, issues, pull requests, or chat.
+4. Do not paste these values into source files, workflow inputs, issues, pull requests, or chat. GitHub Secrets are the correct place.
 
-The build intentionally stops if either secret is missing or malformed. The app reads these values from Gradle-generated BuildConfig fields; the real credentials are not committed to Git.
+The workflow first checks that both Firebase config files and the debug signing keystore are present, then validates both secrets. The checked-in Firebase configuration currently includes the debug package ID `org.telegram.messenger.beta`; use a separate Firebase project/configuration before public release. The app reads these values from Gradle-generated BuildConfig fields; the real credentials are not committed to Git.
 
 ## Start a build on Android
 
